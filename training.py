@@ -25,7 +25,7 @@ def train_model(X_train, X_test, y_train, y_test):
     model.compile(loss="mean_squared_error", optimizer="adam", metrics=["accuracy"])
     print("Model compiled")
     print(model.summary())
-    model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=200, batch_size=16)
+    model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=180, batch_size=16)
     model.save("plate_detection2.h5")
     print("Model trained and saved")
 
