@@ -44,8 +44,5 @@ if __name__ == "__main__":
     print("y_train shape:", y_train.shape)
     print("y_test shape:", y_test.shape)
 
-    print(X_train.head())
-    print(y_train.head())
-
     # Train model
     train_model(X_train, X_test, y_train, y_test)
