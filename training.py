@@ -23,7 +23,7 @@ def train_model(X_train, X_test, y_train, y_test):
 
     model.compile(loss="mean_squared_error", optimizer="adam")
     model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=150, batch_size=16)
-    model.save("object_detection.h5")
+    model.save("plate_detection.h5")
     print("Model trained and saved")
 
 
