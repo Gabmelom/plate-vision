@@ -22,11 +22,11 @@ def train_model(X_train, X_test, y_train, y_test):
 
     model = Model(inputs=inception_resnet.input, outputs=head_model)
 
-    model.compile(loss="mean_squared_error", optimizer="adam", metrics=["accuracy"])
+    model.compile(loss="mean_squared_error", optimizer="adam")
     print("Model compiled")
     print(model.summary())
-    model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=180, batch_size=16)
-    model.save("plate_detection2.h5")
+    model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=200, batch_size=16)
+    model.save("plate_detection.h5")
     print("Model trained and saved")
 
 
@@ -43,6 +43,9 @@ if __name__ == "__main__":
     print("X_test shape:", X_test.shape)
     print("y_train shape:", y_train.shape)
     print("y_test shape:", y_test.shape)
+
+    print(X_train.head())
+    print(y_train.head())
 
     # Train model
     train_model(X_train, X_test, y_train, y_test)
