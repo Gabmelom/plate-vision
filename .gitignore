@@ -1,5 +1,5 @@
 data/kaggle
-data.npz
+*.npz
 logs/
 Scripts/
 share/
