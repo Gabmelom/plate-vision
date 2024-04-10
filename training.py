@@ -2,7 +2,9 @@ import sys
 import numpy as np
 from tensorflow.keras.layers import Dense, Flatten, Input
 from tensorflow.keras.models import Model
+from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.applications import InceptionResNetV2
+from tensorflow.keras.applications.inception_resnet_v2 import preprocess_input
 
 
 # This file is used to train the model on the SCS Openstack server with a better GPU than mine
@@ -22,7 +24,7 @@ def train_model(X_train, X_test, y_train, y_test):
 
     model = Model(inputs=inception_resnet.input, outputs=head_model)
 
-    model.compile(loss="mean_squared_error", optimizer="adam")
+    model.compile(loss="mean_squared_error", optimizer=Adam(learning_rate=0.0001))
     print("Model compiled")
     print(model.summary())
     model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=200, batch_size=16)
@@ -43,6 +45,10 @@ if __name__ == "__main__":
     print("X_test shape:", X_test.shape)
     print("y_train shape:", y_train.shape)
     print("y_test shape:", y_test.shape)
+
+    # Preprocess data
+    # X_train = preprocess_input(X_train)
+    # X_test = preprocess_input(X_test)
 
     # Train model
     train_model(X_train, X_test, y_train, y_test)
