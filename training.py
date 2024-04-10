@@ -26,7 +26,7 @@ def train_model(X_train, X_test, y_train, y_test):
     print("Model compiled")
     print(model.summary())
     model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=180, batch_size=16)
-    model.save("plate_detection_v2.h5")
+    model.save("plate_detection.h5")
     print("Model trained and saved")
 
 def load_data(path):
