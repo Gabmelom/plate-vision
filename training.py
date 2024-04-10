@@ -11,8 +11,6 @@ from tensorflow.keras.applications.inception_resnet_v2 import preprocess_input
 # The model is saved as object_detection.h5
 # The model is trained on a subset of the data (5000 images) due to the computational cost of training on the full dataset
 # Data is split 80-20 for training and testing
-
- 
 def train_model(X_train, X_test, y_train, y_test):
     inception_resnet = InceptionResNetV2(weights="imagenet",include_top=False, input_tensor=Input(shape=(224,224,3)))
 
@@ -31,10 +29,8 @@ def train_model(X_train, X_test, y_train, y_test):
     model.save("plate_detection.h5")
     print("Model trained and saved")
 
-
-if __name__ == "__main__":
-    # Load data
-    loaded = np.load("data.npz")
+def load_data(path):
+    loaded = np.load(path)
     X_train = loaded["X_train"]
     X_test = loaded["X_test"]
     y_train = loaded["y_train"]
@@ -46,9 +42,10 @@ if __name__ == "__main__":
     print("y_train shape:", y_train.shape)
     print("y_test shape:", y_test.shape)
 
-    # Preprocess data
-    # X_train = preprocess_input(X_train)
-    # X_test = preprocess_input(X_test)
+    return X_train, X_test, y_train, y_test
 
-    # Train model
+
+if __name__ == "__main__":
+    X_train, X_test, y_train, y_test = load_data("data.npz")
+    # X_train, X_test, y_train, y_test = load_data("test.npz")
     train_model(X_train, X_test, y_train, y_test)
