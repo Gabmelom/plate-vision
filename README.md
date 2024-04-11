@@ -17,7 +17,7 @@ env/Scripts/activate
 ```
 - Install the requirements:
 ```
-pip install --force-reinstall tensorflow=="2.9.1" easyocr opencv-python matplotlib fastapi
+pip install --force-reinstall tensorflow=="2.9.1" easyocr opencv-python matplotlib fastapi uvicorn
 ```
 - [Download](https://cmailcarletonca-my.sharepoint.com/:u:/g/personal/gabrielmelomartins_cmail_carleton_ca/EQOqvuylHr5PrvktS3n37KQBdzGV6u-D5g7-3iLPkO9egw?e=cmzi8x) the model from the drive and copy it to the root folder of the project
 - Start the server by navigating to the `app` folder and running `main.py` script. E.g `python3 main.py`
