@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>License Plate Detector</title>
+    <link href="{{ url_for('static', path='style.css') }}" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        
+        <h1>License Plate Detector</h1>
+
+        <p> This is a demonstration of the final project of group 20 in the course COMP 4102. This project has been created by Gabriel Melo, Alim Dhanani and Zachary Call.</p>
+
+        <p><b>Instructions</b></p>
+        <p>1. Upload an image file with the license plate you would like to extract</p>
+        <p>2. An image will appear which will highlight the license plate found </p>
+        <p>3. The license plate text will be shown on the image, with a confidence score</p>
+
+        <p id="disclaimer"> Disclaimer: This processor assumes that a license plate is found in the image</p>
+               
+        <p> Accepted file types: <b>jpg, png</b></p>
+        <input type="file" name="file" id="fileInput"><br>
+        
+        <button type="submit", id="submit_button" disabled>Detect License Plate</button>
+
+        <p id="loading">Loading... This may take a few moments</p>
+        <p id="error_message"> <b>There was an error with your image.</b></p>
+
+    </div>
+
+    <div class="container", style="visibility: hidden", id="response_container">
+        <h1>Results</h1>
+        <p>Original Input</p>
+        <img id="original" src="" alt="Original Image">
+        <p>Detected License Plate</p>
+        <img id="detetced" src="" alt="Detected Image">
+    </div>
+
+<script>
+    
+    const input_button = document.querySelector('#fileInput')
+    const submit = document.querySelector('#submit_button')
+
+    input_button.addEventListener('change', 
+    
+    () => {
+        if ((input_button.files.length > 0)){
+
+            filetype = input_button.files[0].name.split('.')[1].toLowerCase()
+
+            if (filetype == 'jpg' || filetype == 'png'){
+                submit.disabled = false;
+            }
+
+            else {
+                submit.disabled = true;  
+            }
+        }
+    })
+
+    submit.addEventListener("click",
+        
+    () => {
+            
+            submit.disabled = true;
+
+            document.getElementById('loading').style.visibility = 'visible';
+            document.getElementById('error_message').style.visibility = 'hidden';
+            document.getElementById('response_container').style.visibility = 'hidden';
+
+            const data = new FormData()
+            data.append('file', input_button.files[0])
+
+            fetch ("/upload", {method: "POST", body: data})
+            .then(res => res.json())
+            .then(data => {
+                
+                if (data.success == 'true'){
+               
+                document.getElementById('loading').style.visibility = 'hidden';
+                document.getElementById('response_container').style.visibility = 'visible';
+                document.getElementById('original').src = `data:image/jpeg;base64, ${data.original_image}`;
+                document.getElementById('detetced').src = `data:image/jpeg;base64, ${data.detected_image}`;
+            
+                }
+
+                else {
+                    document.getElementById('error_message').style.visibility = 'visible';
+                    document.getElementById('loading').style.visibility = 'hidden';
+
+                }
+            }) 
+        }
+    )
+
+</script>
+</body>
+</html>
